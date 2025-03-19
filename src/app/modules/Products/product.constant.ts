@@ -1,0 +1,1 @@
+export const ProductSearchAbleFields = ['location', 'noOfBedRooms', 'rentAmount']
