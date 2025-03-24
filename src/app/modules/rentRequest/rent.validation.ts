@@ -9,9 +9,17 @@ import { z } from "zod";
         duration: z.string().min(1, "Duration is required"),
         specialRequests: z.string().optional(),
         status: z.enum(["pending", "approved", "rejected"]).default("pending"),
+        isPayment:z.boolean().default(false)
+      })
+ })
+
+ const changeRequestStatusSchema = z.object({
+    body: z.object({
+        status: z.enum(["pending", "approved", "rejected"]), 
       })
  })
 
 export const rentValition = {
-    rentalRequestSchema
+    rentalRequestSchema,
+    changeRequestStatusSchema
 }

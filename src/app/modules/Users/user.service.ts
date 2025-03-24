@@ -105,7 +105,7 @@ const changePassword = async (
     { email: userData.email, role: userData.role },
     {
       password: newHashedPass,
-      needsPasswordChange: false,
+      // needsPasswordChange: false,
       passwordChangeAt: new Date(),
     }
   );
@@ -113,10 +113,78 @@ const changePassword = async (
   return null; // pass pathano jabe na. tai null
 };
 
+const changeUserInfoIntoDB = async (
+  userData: JwtPayload,
+  payload: { name:string }
+) => {
+  // console.log(userData)
+  const {email} = userData;
+  const user = await User.findOne({email}).select("email password isBlocked role"); // because in user.model.ts i used return await User.findOne({email}).select("+password");
+  // console.log(user)
+
+  // const user = await User.isUserExistsByCustomID(userData?.id);
+
+
+  if (!user) {
+    throw new AppError(httpStatus.NOT_FOUND, "User is not found!");
+  }
+
+  // const isUserDeleted = user?.isDeleted;
+  // if (isUserDeleted) {
+  //   throw new AppError(httpStatus.FORBIDDEN, "User is Deleted!");
+  // }
+
+
+  const userStauts = user?.isBlocked;
+  if (userStauts) {
+    throw new AppError(httpStatus.FORBIDDEN, "User is blocked!");
+  }
+
+
+
+
+  // const isPasswordMatched = await User.isPasswordMaatched(
+  //   payload?.oldPassword,
+  //   user?.password
+  // );
+  // if (!isPasswordMatched) {
+  //   throw new AppError(httpStatus.FORBIDDEN, "Password does not match");
+  // }
+
+
+  // const newHashedPass = await bcrypt.hash(payload?.newPassword, 12);
+
+  const res = await User.findOneAndUpdate(
+    { email: userData.email, role: userData.role },
+    {
+      name: payload.name,
+      // needsPasswordChange: false,
+      // passwordChangeAt: new Date(),
+    },
+    {
+      new: true
+    }
+  );
+
+  return res; // pass pathano jabe na. tai null
+};
+
+const changeRoleFromDB = async(id:string, payload: string) => {
+  // console.log(id, payload);
+  const res = await User.findByIdAndUpdate({_id: id}, {
+    role: payload
+  }, {new: true})
+
+  return res;
+
+}
+
 export const UserService = {
   createUserIngoDB,
   blockUnblockUser,
   getAllUsersFromDB,
   getSingleUsersFromDB,
-  changePassword
+  changePassword,
+  changeUserInfoIntoDB,
+  changeRoleFromDB
 };
