@@ -17,14 +17,14 @@ router.get('/get-all-listings', productControler.getAllListings);
 
 router.get(
   '/get-all-listings/:email',
-  Auth('landlord'),
+  Auth('landlord', 'admin'),
   productControler.getAllListingsByEmail,
 );
 
 router.get('/:productId', productControler.getProduct);
-router.patch('/:id', Auth('landlord'), productControler.updateRentHouse);
+router.patch('/:id', Auth('landlord', 'admin'), productControler.updateRentHouse);
 // router.put('/:productId', productControler.updateProduct);
-router.delete('/:productId', productControler.deleteProduct);
+router.delete('/:id', Auth("landlord", 'admin'), productControler.deleteProduct);
 
 //orders
 router.get('/orders/all-products', productControler.getOrderByEmail);

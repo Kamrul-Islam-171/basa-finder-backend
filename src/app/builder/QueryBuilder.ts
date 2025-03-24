@@ -12,7 +12,9 @@ class QueryBuilder<T> {
 
   search(searchAbleFields: string[]) {
     const search = this?.query?.search;
+    // console.log(searchAbleFields)
     if (search) {
+      // console.log("ia")
       this.modelQuery = this.modelQuery.find({
         $or: searchAbleFields.map(
           (field) =>
@@ -22,8 +24,44 @@ class QueryBuilder<T> {
         ),
       });
     }
+    
     return this;
   }
+  // search(searchAbleFields: string[]) {
+  //   const search = this?.query?.search;
+  //   console.log(searchAbleFields);
+  
+  //   if (search) {
+  //     // Start building the query
+  //     const queryConditions: any[] = [];
+  
+  //     // Check if location is in the searchable fields
+  //     if (searchAbleFields.includes("location")) {
+  //       queryConditions.push({
+  //         location: { $regex: search, $options: 'i' },
+  //       });
+  //     }
+  
+  //     // Loop through other fields and add conditions to the query
+  //     searchAbleFields.forEach((field) => {
+  //       if (field !== "location") {
+  //         queryConditions.push({
+  //           [field]: { $regex: search, $options: 'i' },
+  //         });
+  //       }
+  //     });
+  
+  //     // If we have conditions to search, update the query
+  //     if (queryConditions.length > 0) {
+  //       this.modelQuery = this.modelQuery.find({
+  //         $or: queryConditions,
+  //       });
+  //     }
+  //   }
+  
+  //   return this;
+  // }
+  
 
   filter() {
     const queryObject = { ...this.query };

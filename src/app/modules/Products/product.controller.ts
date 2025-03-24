@@ -123,7 +123,7 @@ const deleteProduct = async (req: Request, res: Response) => {
     if (result.deletedCount) {
       res.status(200).json({
         success: true,
-        message: 'Product deleted successfully',
+        message: 'House deleted successfully',
         data: {},
       });
     } else {

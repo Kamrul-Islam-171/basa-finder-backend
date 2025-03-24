@@ -14,6 +14,32 @@ router.post(
   ValidateRequest(rentValition.rentalRequestSchema),
   rentControler.createRentRequest,
 );
+router.post(
+  '/change-status',
+  Auth('landlord'),
+  ValidateRequest(rentValition.changeRequestStatusSchema),
+  rentControler.changeRentRequestStatus,
+);
+router.get(
+  '/rent-request',
+  Auth('tenant'),
+  // ValidateRequest(rentValition.rentalRequestSchema),
+  rentControler.getRentRequest,
+);
+
+// earch land lodr er jonno. own house er rent req gula lagbe
+router.get(
+  '/all-rent-request',
+  Auth('landlord'),
+  // ValidateRequest(rentValition.rentalRequestSchema),
+  rentControler.getAllRentRequest,
+);
+router.get(
+  '/rent-request/:id',
+  Auth('tenant'),
+  // ValidateRequest(rentValition.rentalRequestSchema),
+  rentControler.getSingleRentRequest,
+);
 
 
 
