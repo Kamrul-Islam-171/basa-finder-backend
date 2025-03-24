@@ -17,5 +17,7 @@ export default {
     back_end_url:process.env.BURL,
     store_id:process.env.STORE_ID,
     store_pass:process.env.STORE_PASS,
+    user_email:process.env.NEXT_PUBLIC_EMAIL,
+    email_pass:process.env.NEXT_PUBLIC_EMAIL_PASS,
 };
   

@@ -73,6 +73,40 @@ const changePassword = catchAsync(async(req, res) => {
         // data: null
     })
 })
+const changeProfile = catchAsync(async(req, res) => {
+    
+    // console.log(req.user, req.body);
+    
+    const userInfo = req.body;
+    
+    const result = await UserService.changeUserInfoIntoDB(req.user, userInfo); // front end theke email na send kore req.user theke user email niye update korbo
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'User info changed successfully',
+        data: result
+        
+        // data: null
+    })
+})
+const changeRole = catchAsync(async(req, res) => {
+    
+    // console.log(req.user, req.body);
+    const {id} = req.params;
+    
+    const userInfo = req.body;
+    // console.log(userInfo, id)
+    
+    const result = await UserService.changeRoleFromDB(id , userInfo.role); // front end theke email na send kore req.user theke user email niye update korbo
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'User Role changed successfully',
+        data: result
+        
+        // data: null
+    })
+})
 
 
 
@@ -81,6 +115,8 @@ export const UserController = {
     unblockBlockUser,
     getAllCustomers,
     getSingleCustomer,
-    changePassword
+    changePassword,
+    changeProfile,
+    changeRole
     
 }
